@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageToDeal: 5
   stun: 1
-  knockback: {x: 1.6, y: 0, z: 0}
+  knockback: {x: 4, y: 0, z: 0}
   owner: {fileID: 8104737355001854004}
 --- !u!1 &8104737355001854004
 GameObject:

@@ -199,9 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad030875ce692d64b90666f670e0ecd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToDeal: 20
-  stun: 0
-  knockback: {x: 0, y: 0, z: 0}
+  damageToDeal: 5
+  stun: 1
+  knockback: {x: 1.6, y: 0, z: 0}
   owner: {fileID: 8104737355001854004}
 --- !u!1 &8104737355001854004
 GameObject:

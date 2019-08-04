@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
                 cPrint("Basic Punch");
             }
         }
+
+        if (Input.GetButton("QuitGame"))
+            Application.Quit();
     }
 
     void cPrint(object mymessage)

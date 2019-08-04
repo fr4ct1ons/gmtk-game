@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] string controllerNumber = "0";
     [SerializeField] int speed;
+    [SerializeField] TextMeshProUGUI damageView;
     
     Vector3 bufferVector;
     Rigidbody myRigidbody;
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
     public void AddDamage(float value, float stun)
     {
         damagePercentage += value;
+        damageView.text = damagePercentage.ToString();
         if(stun != 0.0f)
         {
             StartCoroutine(Stun(stun));

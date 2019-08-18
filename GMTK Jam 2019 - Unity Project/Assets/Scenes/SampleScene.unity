@@ -1026,6 +1026,11 @@ PrefabInstance:
       propertyPath: damageView
       value: 
       objectReference: {fileID: 241951396}
+    - target: {fileID: 8296172669209399763, guid: f2173faa11202314da864f8f5b594403,
+        type: 3}
+      propertyPath: controllerNumber
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 657547770, guid: f2173faa11202314da864f8f5b594403, type: 3}
       propertyPath: m_IsActive
       value: 0

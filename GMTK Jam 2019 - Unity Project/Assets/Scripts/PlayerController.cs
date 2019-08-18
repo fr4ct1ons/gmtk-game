@@ -2,24 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] string controllerNumber = "0";
+    [SerializeField] int controllerNumber = 0;
     [SerializeField] int speed;
     [SerializeField] TextMeshProUGUI damageView;
+
+    PlayerControls controls;
     
+    Gamepad gamepad;
+    Vector2 controllerLeftAnalog;
+    InputUser myUser;
     Vector3 bufferVector;
     Rigidbody myRigidbody;
     Animator myAnimator;
     int bodyRotation = 1;
-    [SerializeField] float damagePercentage = 0;
+    float damagePercentage = 0;
     bool canMove = true;
+
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Gameplay.Disable();
+    }
+
+    private void Awake()
+    {
+        controls = new PlayerControls();
+        //myUser = new InputUser();
+        try
+        {
+            gamepad = Gamepad.all[controllerNumber - 1];
+            myUser = InputUser.PerformPairingWithDevice(gamepad, myUser);
+            myUser.AssociateActionsWithUser(controls);
+        }
+        catch(System.Exception e)
+        {
+            Debug.Log(e);
+        }
+        controls.Gameplay.Move.performed += gamepad => controllerLeftAnalog = gamepad.ReadValue<Vector2>();
+        controls.Gameplay.Move.canceled += gamepad => controllerLeftAnalog = Vector2.zero;
+        controls.Gameplay.BasicAttack.performed += gamepad => BasicAttack();
+        myRigidbody = GetComponent<Rigidbody>();
+        myAnimator = GetComponent<Animator>();
+    }
 
     void Start()
     {
-        myRigidbody = GetComponent<Rigidbody>();
-        myAnimator = GetComponent<Animator>();
         bufferVector = transform.position;
 
         if (transform.eulerAngles.y >= 85.0f && transform.eulerAngles.y <= 95.0f)
@@ -32,15 +68,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void BasicAttack()
+    {
+        myAnimator.SetTrigger("BasicPunch");
+        cPrint("Basic Punch");
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //cPrint(Input.GetAxisRaw("Joy" + controllerNumber + "Horizontal"));
+        if (Input.GetButton("QuitGame"))
+            Application.Quit();
+
+        //cPrint(Gamepad.all[controllerNumber - 1]);
+
+        //* 
+        cPrint("Joy " + controllerLeftAnalog.x + " Horizontal");
         if (canMove)
         {
-            if (GetAxisUni("Joy" + controllerNumber + "Horizontal") != bodyRotation && GetAxisUni("Joy" + controllerNumber + "Horizontal") != 0)
+            if (GetAxisUni(controllerLeftAnalog.x) != bodyRotation && GetAxisUni(controllerLeftAnalog.x) != 0)
             {
-                cPrint("Input is " + GetAxisUni("Joy" + controllerNumber + "Horizontal") + " bodyRotation is" + bodyRotation);
+                cPrint("Input is " + GetAxisUni(controllerLeftAnalog.x) + " bodyRotation is" + bodyRotation);
                 cPrint("Rotating.");
                 transform.Rotate(0.0f, 180.0f, 0.0f);
             }
@@ -54,23 +102,21 @@ public class PlayerController : MonoBehaviour
                 bodyRotation = -1;
             }
 
-            myRigidbody.MovePosition(transform.position + (transform.forward * GetAxisUni("Joy" + controllerNumber + "Horizontal") * speed * Time.deltaTime * bodyRotation));
-            if (Input.GetButton("Joy" + controllerNumber + "BasicPunch"))
+            myRigidbody.MovePosition(transform.position + (transform.forward * GetAxisUni(controllerLeftAnalog.x) * speed * Time.deltaTime * bodyRotation));
+            /*if (Input.GetButton("Joy" + controllerNumber + "BasicPunch"))
             {
                 myAnimator.SetTrigger("BasicPunch");
                 cPrint("Basic Punch");
-            }
+            }*/
         }
-
-        if (Input.GetButton("QuitGame"))
-            Application.Quit();
+         //*/
     }
 
     void cPrint(object mymessage)
     {
-        if (controllerNumber == "1")
+        if (controllerNumber == 1)
             Debug.Log("<color=red>" + mymessage + "</color>");
-        else if (controllerNumber == "2")
+        else if (controllerNumber == 2)
             Debug.Log("<color=green>" + mymessage + "</color>");
     }
 
@@ -79,6 +125,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxisRaw(axis) > 0)
             return 1;
         else if (Input.GetAxisRaw(axis) < 0)
+            return -1;
+        else
+            return 0;
+    }
+
+    private float GetAxisUni(float value)
+    {
+        if (value > 0)
+            return 1;
+        else if (value < 0)
             return -1;
         else
             return 0;
@@ -103,6 +159,17 @@ public class PlayerController : MonoBehaviour
 
     public float GetDamage() { return damagePercentage; }
     public int GetBodyRotation() { return bodyRotation; }
+
+    //Animator scripts
+
     public void UnallowMovement() { canMove = false; }
     public void AllowMovement() { canMove = true; }
+
+    InputActionMap UseActionsWithGamepad(InputActionMap map, Gamepad gamepad)
+    {
+        var clone = map.Clone();
+        clone.ApplyBindingOverridesOnMatchingControls(gamepad);
+        clone.Enable();
+        return clone;
+    }
 }

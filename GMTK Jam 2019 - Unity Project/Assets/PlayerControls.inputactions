@@ -1,0 +1,52 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "d6aba934-fc0e-4663-bb69-2fa404c11d07",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "85d23b74-e10f-4d49-b4f9-07fa8c87122d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "BasicAttack",
+                    "type": "Button",
+                    "id": "16f9d2fe-9bfb-475b-a9e4-b196931adcf0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "85bcfb56-4c1b-4209-a3eb-dcbe46d2464e",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb883706-ab0f-4e5d-8b8e-f877e3d4fecc",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

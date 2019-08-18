@@ -42,14 +42,17 @@ public class PlayerController : MonoBehaviour
             gamepad = Gamepad.all[controllerNumber - 1];
             myUser = InputUser.PerformPairingWithDevice(gamepad, myUser);
             myUser.AssociateActionsWithUser(controls);
+            controls.Gameplay.Move.performed += ctx => controllerLeftAnalog = ctx.ReadValue<Vector2>();
+            controls.Gameplay.Move.canceled += ctx => controllerLeftAnalog = Vector2.zero;
+            controls.Gameplay.BasicAttack.performed += ctx => BasicAttack();
         }
-        catch(System.Exception e)
+        catch(System.ArgumentOutOfRangeException e)
         {
-            Debug.Log(e);
+            cPrint("Controller for player " + controllerNumber + " not detected!");
+            //controls.Keyboard.MoveRight.performed += ctx => MoveRight();
+            //controls.Keyboard.MoveLeft.performed += ctx => MoveLeft();
+            
         }
-        controls.Gameplay.Move.performed += gamepad => controllerLeftAnalog = gamepad.ReadValue<Vector2>();
-        controls.Gameplay.Move.canceled += gamepad => controllerLeftAnalog = Vector2.zero;
-        controls.Gameplay.BasicAttack.performed += gamepad => BasicAttack();
         myRigidbody = GetComponent<Rigidbody>();
         myAnimator = GetComponent<Animator>();
     }
@@ -83,13 +86,13 @@ public class PlayerController : MonoBehaviour
         //cPrint(Gamepad.all[controllerNumber - 1]);
 
         //* 
-        cPrint("Joy " + controllerLeftAnalog.x + " Horizontal");
+        //cPrint("Joy " + controllerLeftAnalog.x + " Horizontal");
         if (canMove)
         {
             if (GetAxisUni(controllerLeftAnalog.x) != bodyRotation && GetAxisUni(controllerLeftAnalog.x) != 0)
             {
-                cPrint("Input is " + GetAxisUni(controllerLeftAnalog.x) + " bodyRotation is" + bodyRotation);
-                cPrint("Rotating.");
+                //cPrint("Input is " + GetAxisUni(controllerLeftAnalog.x) + " bodyRotation is" + bodyRotation);
+                //cPrint("Rotating.");
                 transform.Rotate(0.0f, 180.0f, 0.0f);
             }
 
@@ -165,11 +168,16 @@ public class PlayerController : MonoBehaviour
     public void UnallowMovement() { canMove = false; }
     public void AllowMovement() { canMove = true; }
 
-    InputActionMap UseActionsWithGamepad(InputActionMap map, Gamepad gamepad)
+    // Keyboard input methods
+
+    public void MoveRight()
     {
-        var clone = map.Clone();
-        clone.ApplyBindingOverridesOnMatchingControls(gamepad);
-        clone.Enable();
-        return clone;
+        Debug.Log("Called.");
+        myRigidbody.MovePosition(transform.position + (transform.forward * -1 * speed * Time.deltaTime * bodyRotation));
+    }
+
+    public void MoveLeft()
+    {
+        myRigidbody.MovePosition(transform.position + (transform.forward * speed * Time.deltaTime * bodyRotation));
     }
 }

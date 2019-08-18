@@ -58,6 +58,52 @@ public class PlayerControls : IInputActionCollection
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Keyboard"",
+            ""id"": ""94bb68fa-dd59-4cb2-8840-c60cd058262f"",
+            ""actions"": [
+                {
+                    ""name"": ""MoveRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""efb3868f-43cf-4d18-b5a3-49c231853a17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MoveLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""e51faab4-b6c7-42d9-8281-c7974acf3b92"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9e500d1a-5203-4458-89df-2f4ee793417a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e86a7811-717a-46d5-922b-5b0959f57a73"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -66,6 +112,10 @@ public class PlayerControls : IInputActionCollection
         m_Gameplay = asset.GetActionMap("Gameplay");
         m_Gameplay_Move = m_Gameplay.GetAction("Move");
         m_Gameplay_BasicAttack = m_Gameplay.GetAction("BasicAttack");
+        // Keyboard
+        m_Keyboard = asset.GetActionMap("Keyboard");
+        m_Keyboard_MoveRight = m_Keyboard.GetAction("MoveRight");
+        m_Keyboard_MoveLeft = m_Keyboard.GetAction("MoveLeft");
     }
 
     ~PlayerControls()
@@ -152,9 +202,55 @@ public class PlayerControls : IInputActionCollection
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Keyboard
+    private readonly InputActionMap m_Keyboard;
+    private IKeyboardActions m_KeyboardActionsCallbackInterface;
+    private readonly InputAction m_Keyboard_MoveRight;
+    private readonly InputAction m_Keyboard_MoveLeft;
+    public struct KeyboardActions
+    {
+        private PlayerControls m_Wrapper;
+        public KeyboardActions(PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveRight => m_Wrapper.m_Keyboard_MoveRight;
+        public InputAction @MoveLeft => m_Wrapper.m_Keyboard_MoveLeft;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KeyboardActions set) { return set.Get(); }
+        public void SetCallbacks(IKeyboardActions instance)
+        {
+            if (m_Wrapper.m_KeyboardActionsCallbackInterface != null)
+            {
+                MoveRight.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMoveRight;
+                MoveRight.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMoveRight;
+                MoveRight.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMoveRight;
+                MoveLeft.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMoveLeft;
+                MoveLeft.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMoveLeft;
+                MoveLeft.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMoveLeft;
+            }
+            m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                MoveRight.started += instance.OnMoveRight;
+                MoveRight.performed += instance.OnMoveRight;
+                MoveRight.canceled += instance.OnMoveRight;
+                MoveLeft.started += instance.OnMoveLeft;
+                MoveLeft.performed += instance.OnMoveLeft;
+                MoveLeft.canceled += instance.OnMoveLeft;
+            }
+        }
+    }
+    public KeyboardActions @Keyboard => new KeyboardActions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnBasicAttack(InputAction.CallbackContext context);
+    }
+    public interface IKeyboardActions
+    {
+        void OnMoveRight(InputAction.CallbackContext context);
+        void OnMoveLeft(InputAction.CallbackContext context);
     }
 }

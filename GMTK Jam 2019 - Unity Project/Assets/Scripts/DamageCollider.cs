@@ -18,9 +18,12 @@ public class DamageCollider : MonoBehaviour
 
     public void DealDamage(GameObject target)
     {
-        target.GetComponent<PlayerController>().AddDamage(damageToDeal, stun);
-        bufferVector = knockback;
-        bufferVector.x *= owner.GetComponent<PlayerController>().GetBodyRotation();
-        target.GetComponent<Rigidbody>().AddForce(bufferVector * target.GetComponent<PlayerController>().GetDamage());
+        if (target.GetComponent<PlayerController>())
+        {
+            target.GetComponent<PlayerController>().AddDamage(damageToDeal, stun);
+            bufferVector = knockback;
+            bufferVector.x *= owner.GetComponent<PlayerController>().GetBodyRotation();
+            target.GetComponent<Rigidbody>().AddForce(bufferVector * target.GetComponent<PlayerController>().GetDamage());
+        }
     }
 }

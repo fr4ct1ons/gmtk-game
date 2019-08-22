@@ -32,6 +32,14 @@ public class PlayerControls : IInputActionCollection
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""BILADA"",
+                    ""type"": ""Button"",
+                    ""id"": ""66cb79dd-6482-407b-886e-9d570fda6b1c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -54,6 +62,39 @@ public class PlayerControls : IInputActionCollection
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BasicAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9bc6fd48-f12e-490e-92a3-07960e38651b"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BILADA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7e71d75-ddc2-4208-a107-32e7f6e7b1b8"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BILADA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0b0f1d2-3f76-43ae-bc08-f35142fd9823"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BILADA"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -112,6 +153,7 @@ public class PlayerControls : IInputActionCollection
         m_Gameplay = asset.GetActionMap("Gameplay");
         m_Gameplay_Move = m_Gameplay.GetAction("Move");
         m_Gameplay_BasicAttack = m_Gameplay.GetAction("BasicAttack");
+        m_Gameplay_BILADA = m_Gameplay.GetAction("BILADA");
         // Keyboard
         m_Keyboard = asset.GetActionMap("Keyboard");
         m_Keyboard_MoveRight = m_Keyboard.GetAction("MoveRight");
@@ -167,12 +209,14 @@ public class PlayerControls : IInputActionCollection
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_BasicAttack;
+    private readonly InputAction m_Gameplay_BILADA;
     public struct GameplayActions
     {
         private PlayerControls m_Wrapper;
         public GameplayActions(PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @BasicAttack => m_Wrapper.m_Gameplay_BasicAttack;
+        public InputAction @BILADA => m_Wrapper.m_Gameplay_BILADA;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +232,9 @@ public class PlayerControls : IInputActionCollection
                 BasicAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBasicAttack;
                 BasicAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBasicAttack;
                 BasicAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBasicAttack;
+                BILADA.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBILADA;
+                BILADA.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBILADA;
+                BILADA.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBILADA;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -198,6 +245,9 @@ public class PlayerControls : IInputActionCollection
                 BasicAttack.started += instance.OnBasicAttack;
                 BasicAttack.performed += instance.OnBasicAttack;
                 BasicAttack.canceled += instance.OnBasicAttack;
+                BILADA.started += instance.OnBILADA;
+                BILADA.performed += instance.OnBILADA;
+                BILADA.canceled += instance.OnBILADA;
             }
         }
     }
@@ -247,6 +297,7 @@ public class PlayerControls : IInputActionCollection
     {
         void OnMove(InputAction.CallbackContext context);
         void OnBasicAttack(InputAction.CallbackContext context);
+        void OnBILADA(InputAction.CallbackContext context);
     }
     public interface IKeyboardActions
     {

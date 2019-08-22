@@ -124,7 +124,7 @@ MonoBehaviour:
   damageToDeal: 5
   stun: 1
   knockback: {x: 4, y: 0, z: 0}
-  owner: {fileID: 0}
+  owner: {fileID: 1629187322134884541}
 --- !u!1 &657547770
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671779515685248386}
   m_LocalRotation: {x: -0.7969029, y: -0.09056259, z: -0.11533413, w: 0.5860395}
-  m_LocalPosition: {x: 1.4901172e-10, y: 0.0048213555, z: -3.5527136e-17}
+  m_LocalPosition: {x: 0.000000004190952, y: 0.0048213173, z: -1.11022296e-17}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1.0000001}
   m_Children:
   - {fileID: 4746030496760533350}
@@ -732,7 +732,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3805617529097803850}
   m_LocalRotation: {x: 0.35330045, y: 0.8653439, z: -0.30116162, w: -0.18883976}
-  m_LocalPosition: {x: 2.9802322e-10, y: 0.003567268, z: -2.9802322e-10}
+  m_LocalPosition: {x: 2.3283064e-10, y: 0.0035672705, z: -0.0000000034924592}
   m_LocalScale: {x: 0.9999999, y: 0.9999998, z: 0.99999994}
   m_Children:
   - {fileID: 2833418612209850760}
@@ -947,7 +947,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6851301471121309046}
   m_LocalRotation: {x: 0.025918188, y: -0.046489682, z: 0.101692334, w: 0.993391}
-  m_LocalPosition: {x: 3.7252902e-11, y: 0.005453919, z: 3.1664968e-10}
+  m_LocalPosition: {x: 0.000000049592934, y: 0.00545396, z: 0.00000000698492}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 5691426401616817967}

@@ -114,6 +114,11 @@ public class PlayerController : MonoBehaviour
                 bodyRotation = -1;
             }
 
+            if (controllerLeftAnalog != Vector2.zero)
+                myAnimator.SetBool("Walking", true);
+            else
+                myAnimator.SetBool("Walking", false);
+
             myRigidbody.MovePosition(transform.position + (transform.forward * GetAxisUni(controllerLeftAnalog.x) * speed * Time.deltaTime * bodyRotation));
             /*if (Input.GetButton("Joy" + controllerNumber + "BasicPunch"))
             {

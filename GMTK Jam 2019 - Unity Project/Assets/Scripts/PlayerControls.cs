@@ -34,7 +34,7 @@ public class PlayerControls : IInputActionCollection
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""BILADA"",
+                    ""name"": ""Kick"",
                     ""type"": ""Button"",
                     ""id"": ""66cb79dd-6482-407b-886e-9d570fda6b1c"",
                     ""expectedControlType"": """",
@@ -67,34 +67,12 @@ public class PlayerControls : IInputActionCollection
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9bc6fd48-f12e-490e-92a3-07960e38651b"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""id"": ""e2ff47c3-d5df-408c-b993-8bc6f75c649c"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""BILADA"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a7e71d75-ddc2-4208-a107-32e7f6e7b1b8"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BILADA"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f0b0f1d2-3f76-43ae-bc08-f35142fd9823"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BILADA"",
+                    ""action"": ""Kick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -153,7 +131,7 @@ public class PlayerControls : IInputActionCollection
         m_Gameplay = asset.GetActionMap("Gameplay");
         m_Gameplay_Move = m_Gameplay.GetAction("Move");
         m_Gameplay_BasicAttack = m_Gameplay.GetAction("BasicAttack");
-        m_Gameplay_BILADA = m_Gameplay.GetAction("BILADA");
+        m_Gameplay_Kick = m_Gameplay.GetAction("Kick");
         // Keyboard
         m_Keyboard = asset.GetActionMap("Keyboard");
         m_Keyboard_MoveRight = m_Keyboard.GetAction("MoveRight");
@@ -209,14 +187,14 @@ public class PlayerControls : IInputActionCollection
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_BasicAttack;
-    private readonly InputAction m_Gameplay_BILADA;
+    private readonly InputAction m_Gameplay_Kick;
     public struct GameplayActions
     {
         private PlayerControls m_Wrapper;
         public GameplayActions(PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @BasicAttack => m_Wrapper.m_Gameplay_BasicAttack;
-        public InputAction @BILADA => m_Wrapper.m_Gameplay_BILADA;
+        public InputAction @Kick => m_Wrapper.m_Gameplay_Kick;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,9 +210,9 @@ public class PlayerControls : IInputActionCollection
                 BasicAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBasicAttack;
                 BasicAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBasicAttack;
                 BasicAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBasicAttack;
-                BILADA.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBILADA;
-                BILADA.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBILADA;
-                BILADA.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBILADA;
+                Kick.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKick;
+                Kick.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKick;
+                Kick.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKick;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -245,9 +223,9 @@ public class PlayerControls : IInputActionCollection
                 BasicAttack.started += instance.OnBasicAttack;
                 BasicAttack.performed += instance.OnBasicAttack;
                 BasicAttack.canceled += instance.OnBasicAttack;
-                BILADA.started += instance.OnBILADA;
-                BILADA.performed += instance.OnBILADA;
-                BILADA.canceled += instance.OnBILADA;
+                Kick.started += instance.OnKick;
+                Kick.performed += instance.OnKick;
+                Kick.canceled += instance.OnKick;
             }
         }
     }
@@ -297,7 +275,7 @@ public class PlayerControls : IInputActionCollection
     {
         void OnMove(InputAction.CallbackContext context);
         void OnBasicAttack(InputAction.CallbackContext context);
-        void OnBILADA(InputAction.CallbackContext context);
+        void OnKick(InputAction.CallbackContext context);
     }
     public interface IKeyboardActions
     {

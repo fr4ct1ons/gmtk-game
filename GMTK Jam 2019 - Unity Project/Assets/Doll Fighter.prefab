@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerNumber: 1
-  speed: 1
+  speed: 2
   damageView: {fileID: 0}
 --- !u!1 &2193676364005891018
 GameObject:

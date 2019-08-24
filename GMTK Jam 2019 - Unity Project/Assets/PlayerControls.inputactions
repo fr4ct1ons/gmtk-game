@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "BILADA",
+                    "name": "Kick",
                     "type": "Button",
                     "id": "66cb79dd-6482-407b-886e-9d570fda6b1c",
                     "expectedControlType": "",
@@ -55,34 +55,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9bc6fd48-f12e-490e-92a3-07960e38651b",
-                    "path": "<Gamepad>/leftStick/up",
+                    "id": "e2ff47c3-d5df-408c-b993-8bc6f75c649c",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BILADA",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a7e71d75-ddc2-4208-a107-32e7f6e7b1b8",
-                    "path": "<Gamepad>/leftStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BILADA",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f0b0f1d2-3f76-43ae-bc08-f35142fd9823",
-                    "path": "<Gamepad>/leftStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BILADA",
+                    "action": "Kick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

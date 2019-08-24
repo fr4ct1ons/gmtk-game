@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             controls.Gameplay.Move.performed += ctx => controllerLeftAnalog = ctx.ReadValue<Vector2>();
             controls.Gameplay.Move.canceled += ctx => controllerLeftAnalog = Vector2.zero;
             controls.Gameplay.BasicAttack.performed += ctx => BasicAttack();
-            controls.Gameplay.BILADA.performed += ctx => BILADA();
+            controls.Gameplay.Kick.performed += ctx => Kick();
         }
         catch(System.ArgumentOutOfRangeException e)
         {
@@ -72,9 +72,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void BILADA()
+    void Kick()
     {
-        cPrint("SURRA DE PAU MOLE");
+        if(canMove)
+        {
+            myAnimator.SetTrigger("Kick");
+            cPrint("Basic Punch");
+        }
     }
 
     void BasicAttack()

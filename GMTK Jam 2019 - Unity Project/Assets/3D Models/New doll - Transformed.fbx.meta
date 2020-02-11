@@ -21,6 +21,12 @@ ModelImporter:
   - first:
       74: 8182799979312076435
     second: Rig|RigWalk
+  - first:
+      74: 6033169733073780088
+    second: Rig|RigTest
+  - first:
+      74: 2485252710250864338
+    second: Rig|RigWalking
   externalObjects: {}
   materials:
     materialImportMode: 1

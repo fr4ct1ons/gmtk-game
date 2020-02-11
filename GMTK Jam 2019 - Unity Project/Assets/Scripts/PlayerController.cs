@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Users;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] int controllerNumber = 0;
-    [SerializeField] int speed;
+    [SerializeField] float speed;
     [SerializeField] TextMeshProUGUI damageView;
 
     PlayerControls controls;
@@ -109,11 +109,11 @@ public class PlayerController : MonoBehaviour
                 transform.Rotate(0.0f, 180.0f, 0.0f);
             }
 
-            if (transform.eulerAngles.y >= 85.0f && transform.eulerAngles.y <= 95.0f)
+            if (transform.localEulerAngles.y >= 85.0f && transform.eulerAngles.y <= 95.0f)
             {
                 bodyRotation = 1;
             }
-            else if (transform.eulerAngles.y >= 265 && transform.eulerAngles.y <= 275)
+            else if (transform.localEulerAngles.y >= 265 && transform.eulerAngles.y <= 275)
             {
                 bodyRotation = -1;
             }
@@ -183,7 +183,11 @@ public class PlayerController : MonoBehaviour
 
     //Animator scripts
 
-    public void UnallowMovement() { canMove = false; }
+    public void UnallowMovement()
+    {
+        canMove = false;
+        myAnimator.SetBool("Walking", false);
+    }
     public void AllowMovement() { canMove = true; }
 
     // Keyboard input methods

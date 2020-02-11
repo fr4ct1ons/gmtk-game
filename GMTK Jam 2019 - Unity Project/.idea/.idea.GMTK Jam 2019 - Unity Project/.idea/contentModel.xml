@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\Lucena\.Rider2019.2\system\extResources" t="IncludeRecursive" />
@@ -9,6 +9,8 @@
         <e p="Scripts" t="Include">
           <e p="CameraPosition.cs" t="Include" />
           <e p="DamageCollider.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
+          <e p="MenuController.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerControls.cs" t="Include" />
         </e>

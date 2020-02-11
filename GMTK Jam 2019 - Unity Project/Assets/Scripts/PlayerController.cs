@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     Animator myAnimator;
     int bodyRotation = 1;
     float damagePercentage = 0;
-    bool canMove = true;
+    bool canMove = false;
 
     private void OnEnable()
     {
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.OnGameStart += () => canMove = true;
         controls = new PlayerControls();
         //myUser = new InputUser();
         try

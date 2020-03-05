@@ -37,24 +37,10 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.OnGameStart += () => canMove = true;
         controls = new PlayerControls();
-        //myUser = new InputUser();
-        try
-        {
-            gamepad = Gamepad.all[controllerNumber - 1];
-            myUser = InputUser.PerformPairingWithDevice(gamepad, myUser);
-            myUser.AssociateActionsWithUser(controls);
-            controls.Gameplay.Move.performed += ctx => controllerLeftAnalog = ctx.ReadValue<Vector2>();
-            controls.Gameplay.Move.canceled += ctx => controllerLeftAnalog = Vector2.zero;
-            controls.Gameplay.BasicAttack.performed += ctx => BasicAttack();
-            controls.Gameplay.Kick.performed += ctx => Kick();
-        }
-        catch(System.ArgumentOutOfRangeException e)
-        {
-            cPrint("Controller for player " + controllerNumber + " not detected!");
-            //controls.Keyboard.MoveRight.performed += ctx => MoveRight();
-            //controls.Keyboard.MoveLeft.performed += ctx => MoveLeft();
-            
-        }
+        EnableController();
+
+
+
         myRigidbody = GetComponent<Rigidbody>();
         myAnimator = GetComponent<Animator>();
     }
@@ -125,13 +111,7 @@ public class PlayerController : MonoBehaviour
                 myAnimator.SetBool("Walking", false);
 
             myRigidbody.MovePosition(transform.position + (transform.forward * GetAxisUni(controllerLeftAnalog.x) * speed * Time.deltaTime * bodyRotation));
-            /*if (Input.GetButton("Joy" + controllerNumber + "BasicPunch"))
-            {
-                myAnimator.SetTrigger("BasicPunch");
-                cPrint("Basic Punch");
-            }*/
         }
-         //*/
     }
 
     void cPrint(object mymessage)
@@ -177,6 +157,24 @@ public class PlayerController : MonoBehaviour
         canMove = false;
         yield return new WaitForSeconds(time);
         canMove = true;
+    }
+
+    public void EnableController()
+    {
+        try
+        {
+            gamepad = Gamepad.all[controllerNumber - 1];
+            myUser = InputUser.PerformPairingWithDevice(gamepad, myUser);
+            myUser.AssociateActionsWithUser(controls);
+            controls.Gameplay.Move.performed += ctx => controllerLeftAnalog = ctx.ReadValue<Vector2>();
+            controls.Gameplay.Move.canceled += ctx => controllerLeftAnalog = Vector2.zero;
+            controls.Gameplay.BasicAttack.performed += ctx => BasicAttack();
+            controls.Gameplay.Kick.performed += ctx => Kick();
+        }
+        catch(System.ArgumentOutOfRangeException e)
+        {
+            cPrint("Controller for player " + controllerNumber + " not detected!");
+        }
     }
 
     public float GetDamage() { return damagePercentage; }

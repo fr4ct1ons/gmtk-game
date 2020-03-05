@@ -1,0 +1,33 @@
+{
+    "name": "MenuInputs",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "b679f06b-4ae2-443f-922d-79f574e92887",
+            "actions": [
+                {
+                    "name": "Connect",
+                    "type": "Button",
+                    "id": "3189410a-1ac9-463e-bfbb-4f00f953d6f3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0455fbed-248c-4075-be9d-bac3b68cc7bf",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Connect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

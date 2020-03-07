@@ -11,6 +11,7 @@
           <e p="DamageCollider.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="MenuController.cs" t="Include" />
+          <e p="MenuInputs.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerControls.cs" t="Include" />
         </e>

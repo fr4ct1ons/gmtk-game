@@ -44,7 +44,20 @@ public class GameManager : MonoBehaviour
             controllerStatus[1].color = new Color32(0, 255, 0, 255);
             connectedPlayers[1] = true;
         };
+        
+        controllerStatus[0].SetText("NOT CONNECTED");
+        controllerStatus[0].color = new Color32(255, 0, 0, 255);
+        connectedPlayers[0] = false;
 
+        controllerStatus[1].SetText("NOT CONNECTED");
+        controllerStatus[1].color = new Color32(255, 0, 0, 255);
+        connectedPlayers[1] = false;
+
+        users[0] = InputUser.CreateUserWithoutPairedDevices();
+        users[1] = InputUser.CreateUserWithoutPairedDevices();
+        users[0].AssociateActionsWithUser(inputs[0]);
+        users[1].AssociateActionsWithUser(inputs[1]);
+        
         ControllerPairing();
     }
 
@@ -110,6 +123,11 @@ public class GameManager : MonoBehaviour
     {
         inputs[0].Menu.Disable();
         inputs[1].Menu.Disable();
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 
 }

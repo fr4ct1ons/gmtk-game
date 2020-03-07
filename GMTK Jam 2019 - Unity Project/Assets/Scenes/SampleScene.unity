@@ -2468,6 +2468,8 @@ MonoBehaviour:
   controllerStatus:
   - {fileID: 2126197455}
   - {fileID: 2126080963}
+  controllersUI: {fileID: 108516787}
+  gameplayUI: {fileID: 1288186949}
 --- !u!4 &1928634613
 Transform:
   m_ObjectHideFlags: 0

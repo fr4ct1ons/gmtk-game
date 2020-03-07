@@ -80,13 +80,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("QuitGame"))
-            Application.Quit();
 
-        //cPrint(Gamepad.all[controllerNumber - 1]);
-
-        //* 
-        //cPrint("Joy " + controllerLeftAnalog.x + " Horizontal");
         if (canMove)
         {
             if (GetAxisUni(controllerLeftAnalog.x) != bodyRotation && GetAxisUni(controllerLeftAnalog.x) != 0)

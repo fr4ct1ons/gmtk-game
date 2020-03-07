@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.InputSystem;
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     public static event VoidDelegate OnGameStart;
     
     [SerializeField] private TextMeshProUGUI[] controllerStatus = new TextMeshProUGUI[2];
+    [SerializeField] private GameObject controllersUI, gameplayUI;
+    
+    
     private int currentControllerCount = -1;
 
     private MenuInputs[] inputs = new MenuInputs[2];
@@ -36,6 +40,9 @@ public class GameManager : MonoBehaviour
             controllerStatus[0].SetText("READY");
             controllerStatus[0].color = new Color32(0, 255, 0, 255);
             connectedPlayers[0] = true;
+            
+            if(connectedPlayers[1])
+                StartCoroutine(StartGame());
         };
 
         inputs[1].Menu.Connect.performed += ctx =>
@@ -43,6 +50,9 @@ public class GameManager : MonoBehaviour
             controllerStatus[1].SetText("READY");
             controllerStatus[1].color = new Color32(0, 255, 0, 255);
             connectedPlayers[1] = true;
+            
+            if(connectedPlayers[0])
+                StartCoroutine(StartGame());
         };
         
         controllerStatus[0].SetText("NOT CONNECTED");
@@ -85,12 +95,17 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
+    
 
     public void SetPairingControllers(bool val) { pairingControllers = val; }
 
-    public void StartGame()
+    public IEnumerator StartGame()
     {
+        yield return new WaitForSeconds(1.0f);
         OnGameStart?.Invoke();
+        gameplayUI.SetActive(true);
+        controllersUI.SetActive(false);
     }
 
     public void ControllerPairing()
